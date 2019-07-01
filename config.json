@@ -1,0 +1,19 @@
+{
+  "socketURL": "/",
+  "dirPath": "",
+  "homePage": "/demos/index.html",
+  "socketMessageEvent": "RTCMultiConnection-Message",
+  "socketCustomEvent": "RTCMultiConnection-Custom-Message",
+  "port": "8085",
+  "enableLogs": "false",
+  "autoRebootServerOnFailure": "false",
+  "isUseHTTPs": "false",
+  "sslKey": "./ssl_certs/server.key",
+  "sslCert": "./ssl_certs/server.crt",
+  // "sslKey": "./fake-keys/privatekey.pem",
+  // "sslCert": "./fake-keys/certificate.pem",
+  "sslCabundle": "",
+  "enableAdmin": "false",
+  "adminUserName": "username",
+  "adminPassword": "password"
+}
