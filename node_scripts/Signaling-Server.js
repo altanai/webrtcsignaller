@@ -28,8 +28,8 @@ module.exports = exports = function(socket, config) {
 
     function appendUser(socket, params) {
         try {
+            console.log("appendUser", params);
             var extra = params.extra;
-
             var params = socket.handshake.query;
 
             if (params.extra) {
@@ -226,6 +226,7 @@ module.exports = exports = function(socket, config) {
     }
 
     function onConnection(socket) {
+        console.log("onConnection");
         var params = socket.handshake.query;
 
         if(!params.userid) {
@@ -286,6 +287,7 @@ module.exports = exports = function(socket, config) {
 
         socket.on('extra-data-updated', function(extra) {
             try {
+                console.log("extra-data-updated - ", extra);
                 if (!listOfUsers[socket.userid]) return;
 
                 if (listOfUsers[socket.userid].socket.admininfo) {
@@ -341,7 +343,8 @@ module.exports = exports = function(socket, config) {
         });
 
         socket.on('get-remote-user-extra-data', function(remoteUserId, callback) {
-            callback = callback || function() {};
+            console.log("get-remote-user-extra-data", remoteUserId)
+;            callback = callback || function() {};
             if (!remoteUserId || !listOfUsers[remoteUserId]) {
                 callback(CONST_STRINGS.USERID_NOT_AVAILABLE);
                 return;
@@ -351,6 +354,7 @@ module.exports = exports = function(socket, config) {
 
         var dontDuplicateListeners = {};
         socket.on('set-custom-socket-event-listener', function(customEvent) {
+            console.log("set-custom-socket-event-listener", customEvent);
             if (dontDuplicateListeners[customEvent]) return;
             dontDuplicateListeners[customEvent] = customEvent;
 
@@ -362,6 +366,8 @@ module.exports = exports = function(socket, config) {
         });
 
         socket.on('changed-uuid', function(newUserId, callback) {
+            console.log("changed-uuid", newUserId);
+
             callback = callback || function() {};
 
             try {
@@ -457,6 +463,8 @@ module.exports = exports = function(socket, config) {
 
         socket.on('check-presence', function(roomid, callback) {
             try {
+                console.log("check-presence", roomid);
+
                 if (!listOfRooms[roomid] || !listOfRooms[roomid].participants.length) {
                     callback(false, roomid, {
                         _room: {
@@ -528,6 +536,8 @@ module.exports = exports = function(socket, config) {
 
         function joinARoom(message) {
             try {
+                console.log("joinARoom", message);
+
                 if (!socket.admininfo || !socket.admininfo.sessionid) return;
 
                 // var roomid = message.remoteUserId;
@@ -578,6 +588,7 @@ module.exports = exports = function(socket, config) {
 
         function appendToRoom(roomid, userid) {
             try {
+                console.log("appendToRoom", roomid , userid);
                 if (!listOfRooms[roomid]) {
                     listOfRooms[roomid] = {
                         maxParticipantsAllowed: parseInt(params.maxParticipantsAllowed || 1000) || 1000,
@@ -656,6 +667,7 @@ module.exports = exports = function(socket, config) {
         }
 
         socket.on(socketMessageEvent, function(message, callback) {
+            console.log("socketMessageEvent ", socketMessageEvent , message);
             if (message.remoteUserId && message.remoteUserId === socket.userid) {
                 // remoteUserId MUST be unique
                 return;
@@ -802,6 +814,8 @@ module.exports = exports = function(socket, config) {
         });
 
         socket.on('open-room', function(arg, callback) {
+            console.log("open-room", arg);
+
             callback = callback || function() {};
 
             try {
@@ -894,6 +908,7 @@ module.exports = exports = function(socket, config) {
         });
 
         socket.on('join-room', function(arg, callback) {
+            console.log("join-room", arg);
             callback = callback || function() {};
 
             try {
