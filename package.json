@@ -1,13 +1,20 @@
 {
   "name": "webrtcdevelopment_signaller",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "webrtc socket.io signaller",
   "main": "server.js",
-  "dependencies": {},
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
+  },
+  "jshintConfig": {
+    "node": true,
+    "debug": true,
+    "devel": true
   },
   "keywords": [
     "webrtc",
@@ -15,7 +22,8 @@
     "signaller",
     "real",
     "time",
-    "communication"
+    "communication",
+    "webrtc development"
   ],
   "author": "altanai",
   "license": "ISC"

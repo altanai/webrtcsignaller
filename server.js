@@ -53,8 +53,6 @@ var httpApp;
 if (isUseHTTPs) {
     httpServer = require('https');
 
-    // See how to use a valid certificate:
-    // https://github.com/muaz-khan/WebRTC-Experiment/issues/62
     var options = {
         key: null,
         cert: null,
@@ -105,14 +103,8 @@ httpApp = httpApp.listen(process.env.PORT || PORT, process.env.IP || "0.0.0.0", 
     RTCMultiConnectionServer.afterHttpListen(httpApp, config);
 });
 
-// --------------------------
-// socket.io codes goes below
-
 ioServer(httpApp).on('connection', function(socket) {
     RTCMultiConnectionServer.addSocket(socket, config);
-
-    // ----------------------
-    // below code is optional
 
     const params = socket.handshake.query;
 

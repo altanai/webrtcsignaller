@@ -1,7 +1,3 @@
-// Muaz Khan      - www.MuazKhan.com
-// MIT License    - www.WebRTC-Experiment.com/licence
-// Documentation  - github.com/muaz-khan/RTCMultiConnection
-
 var listOfUsers = {};
 var listOfRooms = {};
 
@@ -444,7 +440,10 @@ module.exports = exports = function(socket, config) {
 
                 var user = listOfUsers[socket.userid];
 
-                if(!user) return callback(false, CONST_STRINGS.USERID_NOT_AVAILABLE);
+                if(!user) {
+
+                    return callback(false, CONST_STRINGS.USERID_NOT_AVAILABLE);
+                }
                 if(!user.roomid) return callback(false, CONST_STRINGS.ROOM_NOT_AVAILABLE);
                 if(!socket.admininfo) return callback(false, CONST_STRINGS.INVALID_SOCKET);
 

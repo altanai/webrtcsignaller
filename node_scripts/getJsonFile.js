@@ -4,10 +4,8 @@ function getJsonFile(path) {
     try {
         var json = fs.readFileSync(path);
         output = JSON.parse(json);
-    }
-    catch(e) {
+    } catch (e) {
         output = {};
-
         // console.log(e.message, e.stack);
     }
     return output;
