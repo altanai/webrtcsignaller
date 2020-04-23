@@ -14,13 +14,10 @@ var CONST_STRINGS = require('./CONST_STRINGS.js');
 
 var isAdminAuthorized = require('./verify-admin.js');
 
-module.exports = exports = function(socket, config) {
+module.exports = exports = function (socket, config) {
     config = config || {};
 
     onConnection(socket);
-
-    // to secure your socket.io usage: (via: docs/tips-tricks.md)
-    // io.set('origins', 'https://domain.com');
 
     function appendUser(socket, params) {
         try {
@@ -55,7 +52,7 @@ module.exports = exports = function(socket, config) {
     }
 
     function sendToAdmin(all) {
-        if(config.enableAdmin !== true) {
+        if (config.enableAdmin !== true) {
             return;
         }
 
@@ -63,7 +60,7 @@ module.exports = exports = function(socket, config) {
             if (adminSocket) {
                 var users = [];
                 // temporarily disabled
-                config.enableAdmin === true && Object.keys(listOfUsers).forEach(function(userid) {
+                config.enableAdmin === true && Object.keys(listOfUsers).forEach(function (userid) {
                     try {
                         var item = listOfUsers[userid];
                         if (!item) return; // maybe user just left?
@@ -87,7 +84,7 @@ module.exports = exports = function(socket, config) {
                 });
 
                 var scalableBroadcastUsers = 0;
-                if(ScalableBroadcast && ScalableBroadcast._) {
+                if (ScalableBroadcast && ScalableBroadcast._) {
                     scalableBroadcastUsers = ScalableBroadcast._.getUsers();
                 }
 
@@ -104,11 +101,11 @@ module.exports = exports = function(socket, config) {
     }
 
     function handleAdminSocket(socket, params) {
-        if(config.enableAdmin !== true || !params.adminUserName || !params.adminPassword) {
+        if (config.enableAdmin !== true || !params.adminUserName || !params.adminPassword) {
             socket.emit('admin', {
                 error: 'Please pass "adminUserName" and "adminPassword" via socket.io parameters.'
             });
-            
+
             pushLogs(config, 'invalid-admin', {
                 message: CONST_STRINGS.INVALID_ADMIN_CREDENTIAL,
                 stack: 'name: ' + params.adminUserName + '\n' + 'password: ' + params.adminPassword
@@ -137,7 +134,7 @@ module.exports = exports = function(socket, config) {
         });
 
         adminSocket = socket;
-        socket.on('admin', function(message, callback) {
+        socket.on('admin', function (message, callback) {
             if (!isAdminAuthorized(params, config)) {
                 socket.emit('admin', {
                     error: 'Invalid admin username or password.'
@@ -152,7 +149,8 @@ module.exports = exports = function(socket, config) {
                 return;
             }
 
-            callback = callback || function() {};
+            callback = callback || function () {
+            };
 
             if (message.all === true) {
                 sendToAdmin(true);
@@ -205,7 +203,7 @@ module.exports = exports = function(socket, config) {
                     if (room) {
                         var participants = room.participants;
                         delete listOfRooms[message.roomid];
-                        participants.forEach(function(userid) {
+                        participants.forEach(function (userid) {
                             var user = listOfUsers[userid];
                             if (user) {
                                 user.socket.disconnect();
@@ -222,14 +220,14 @@ module.exports = exports = function(socket, config) {
     }
 
     function onConnection(socket) {
-        console.log("onConnection");
         var params = socket.handshake.query;
+        console.log("onConnection", params);
 
-        if(!params.userid) {
+        if (!params.userid) {
             params.userid = (Math.random() * 100).toString().replace('.', '');
         }
 
-        if(!params.sessionid) {
+        if (!params.sessionid) {
             params.sessionid = (Math.random() * 100).toString().replace('.', '');
         }
 
@@ -281,7 +279,7 @@ module.exports = exports = function(socket, config) {
         socket.userid = params.userid;
         appendUser(socket, params);
 
-        socket.on('extra-data-updated', function(extra) {
+        socket.on('extra-data-updated', function (extra) {
             try {
                 console.log("extra-data-updated - ", extra);
                 if (!listOfUsers[socket.userid]) return;
@@ -317,7 +315,7 @@ module.exports = exports = function(socket, config) {
                         // room's extra must match owner's extra
                         listOfRooms[roomid].extra = extra;
                     }
-                    listOfRooms[roomid].participants.forEach(function(pid) {
+                    listOfRooms[roomid].participants.forEach(function (pid) {
                         try {
                             var user = listOfUsers[pid];
                             if (!user) {
@@ -338,9 +336,10 @@ module.exports = exports = function(socket, config) {
             }
         });
 
-        socket.on('get-remote-user-extra-data', function(remoteUserId, callback) {
+        socket.on('get-remote-user-extra-data', function (remoteUserId, callback) {
             console.log("get-remote-user-extra-data", remoteUserId)
-;            callback = callback || function() {};
+            ;callback = callback || function () {
+            };
             if (!remoteUserId || !listOfUsers[remoteUserId]) {
                 callback(CONST_STRINGS.USERID_NOT_AVAILABLE);
                 return;
@@ -349,22 +348,24 @@ module.exports = exports = function(socket, config) {
         });
 
         var dontDuplicateListeners = {};
-        socket.on('set-custom-socket-event-listener', function(customEvent) {
+        socket.on('set-custom-socket-event-listener', function (customEvent) {
             console.log("set-custom-socket-event-listener", customEvent);
             if (dontDuplicateListeners[customEvent]) return;
             dontDuplicateListeners[customEvent] = customEvent;
 
-            socket.on(customEvent, function(message) {
+            socket.on(customEvent, function (message) {
                 try {
                     socket.broadcast.emit(customEvent, message);
-                } catch (e) {}
+                } catch (e) {
+                }
             });
         });
 
-        socket.on('changed-uuid', function(newUserId, callback) {
+        socket.on('changed-uuid', function (newUserId, callback) {
             console.log("changed-uuid", newUserId);
 
-            callback = callback || function() {};
+            callback = callback || function () {
+            };
 
             try {
                 if (listOfUsers[socket.userid] && listOfUsers[socket.userid].socket.userid == socket.userid) {
@@ -388,9 +389,10 @@ module.exports = exports = function(socket, config) {
             }
         });
 
-        socket.on('set-password', function(password, callback) {
+        socket.on('set-password', function (password, callback) {
             try {
-                callback = callback || function() {};
+                callback = callback || function () {
+                };
 
                 if (!socket.admininfo) {
                     callback(null, null, CONST_STRINGS.DID_NOT_JOIN_ANY_ROOM);
@@ -402,8 +404,7 @@ module.exports = exports = function(socket, config) {
                 if (listOfRooms[roomid] && listOfRooms[roomid].owner == socket.userid) {
                     listOfRooms[roomid].password = password;
                     callback(true, roomid, null);
-                }
-                else {
+                } else {
                     callback(false, roomid, CONST_STRINGS.ROOM_PERMISSION_DENIED);
                 }
             } catch (e) {
@@ -411,7 +412,7 @@ module.exports = exports = function(socket, config) {
             }
         });
 
-        socket.on('disconnect-with', function(remoteUserId, callback) {
+        socket.on('disconnect-with', function (remoteUserId, callback) {
             try {
                 if (listOfUsers[socket.userid] && listOfUsers[socket.userid].connectedWith[remoteUserId]) {
                     delete listOfUsers[socket.userid].connectedWith[remoteUserId];
@@ -432,25 +433,36 @@ module.exports = exports = function(socket, config) {
             }
         });
 
-        socket.on('close-entire-session', function(callback) {
+        socket.on('close-entire-session', function (callback) {
             try {
-                if(!callback || typeof callback !== 'function') {
-                    callback = function() {};
+                if (!callback || typeof callback !== 'function') {
+                    callback = function () {
+                    };
                 }
 
                 var user = listOfUsers[socket.userid];
 
-                if(!user) {
-
+                if (!user) {
+                    console.warn("close-entire-session - userid not given ");
                     return callback(false, CONST_STRINGS.USERID_NOT_AVAILABLE);
                 }
-                if(!user.roomid) return callback(false, CONST_STRINGS.ROOM_NOT_AVAILABLE);
-                if(!socket.admininfo) return callback(false, CONST_STRINGS.INVALID_SOCKET);
+                if (!user.roomid) {
+                    console.warn("close-entire-session -  roomid not given ");
+                    return callback(false, CONST_STRINGS.ROOM_NOT_AVAILABLE);
+                }
+                if (!socket.admininfo) {
+                    console.warn("close-entire-session -  socket.admininfo not given ");
+                    return callback(false, CONST_STRINGS.INVALID_SOCKET);
+                }
 
                 var room = listOfRooms[user.roomid];
-                if(!room) return callback(false, CONST_STRINGS.ROOM_NOT_AVAILABLE);
-                if(room.owner !== user.userid) return callback(false, CONST_STRINGS.ROOM_PERMISSION_DENIED);
-                
+                if (!room) {
+                    console.warn("close-entire-session -  room not present in list of rooms ");
+                    return callback(false, CONST_STRINGS.ROOM_NOT_AVAILABLE);
+                }
+
+                if (room.owner !== user.userid) return callback(false, CONST_STRINGS.ROOM_PERMISSION_DENIED);
+
                 autoCloseEntireSession = true;
                 closeOrShiftRoom();
 
@@ -460,7 +472,7 @@ module.exports = exports = function(socket, config) {
             }
         });
 
-        socket.on('check-presence', function(roomid, callback) {
+        socket.on('check-presence', function (roomid, callback) {
             try {
                 console.log("check-presence", roomid);
 
@@ -473,7 +485,7 @@ module.exports = exports = function(socket, config) {
                     });
                 } else {
                     var extra = listOfRooms[roomid].extra;
-                    if(typeof extra !== 'object' || !extra) {
+                    if (typeof extra !== 'object' || !extra) {
                         extra = {
                             value: extra
                         };
@@ -570,7 +582,7 @@ module.exports = exports = function(socket, config) {
 
                 if (enableScalableBroadcast === false) {
                     // connect with all participants
-                    listOfRooms[roomid].participants.forEach(function(pid) {
+                    listOfRooms[roomid].participants.forEach(function (pid) {
                         if (pid === socket.userid || !listOfUsers[pid]) return;
 
                         var user = listOfUsers[pid];
@@ -587,7 +599,7 @@ module.exports = exports = function(socket, config) {
 
         function appendToRoom(roomid, userid) {
             try {
-                console.log("appendToRoom", roomid , userid);
+                console.log("appendToRoom", roomid, userid);
                 if (!listOfRooms[roomid]) {
                     listOfRooms[roomid] = {
                         maxParticipantsAllowed: parseInt(params.maxParticipantsAllowed || 1000) || 1000,
@@ -623,7 +635,7 @@ module.exports = exports = function(socket, config) {
                     if (socket.userid === listOfRooms[roomid].owner) {
                         if (autoCloseEntireSession === false && listOfRooms[roomid].participants.length > 1) {
                             var firstParticipant;
-                            listOfRooms[roomid].participants.forEach(function(pid) {
+                            listOfRooms[roomid].participants.forEach(function (pid) {
                                 if (firstParticipant || pid === socket.userid) return;
                                 if (!listOfUsers[pid]) return;
                                 firstParticipant = listOfUsers[pid];
@@ -638,7 +650,7 @@ module.exports = exports = function(socket, config) {
 
                                 // remove from room's participants list
                                 var newParticipantsList = [];
-                                listOfRooms[roomid].participants.forEach(function(pid) {
+                                listOfRooms[roomid].participants.forEach(function (pid) {
                                     if (pid != socket.userid) {
                                         newParticipantsList.push(pid);
                                     }
@@ -652,7 +664,7 @@ module.exports = exports = function(socket, config) {
                         }
                     } else {
                         var newParticipantsList = [];
-                        listOfRooms[roomid].participants.forEach(function(pid) {
+                        listOfRooms[roomid].participants.forEach(function (pid) {
                             if (pid && pid != socket.userid && listOfUsers[pid]) {
                                 newParticipantsList.push(pid);
                             }
@@ -665,8 +677,8 @@ module.exports = exports = function(socket, config) {
             }
         }
 
-        socket.on(socketMessageEvent, function(message, callback) {
-            console.log("socketMessageEvent ", socketMessageEvent , message);
+        socket.on(socketMessageEvent, function (message, callback) {
+            console.log("socketMessageEvent ", socketMessageEvent, message);
             if (message.remoteUserId && message.remoteUserId === socket.userid) {
                 // remoteUserId MUST be unique
                 return;
@@ -746,53 +758,53 @@ module.exports = exports = function(socket, config) {
             }
         });
 
-        socket.on('is-valid-password', function(password, roomid, callback) {
+        socket.on('is-valid-password', function (password, roomid, callback) {
             try {
-                callback = callback || function() {};
-                
-                if(!password || !password.toString().replace(/ /g, '').length) {
+                callback = callback || function () {
+                };
+
+                if (!password || !password.toString().replace(/ /g, '').length) {
                     callback(false, roomid, 'You did not enter the password.');
                     return;
                 }
 
-                if(!roomid || !roomid.toString().replace(/ /g, '').length) {
+                if (!roomid || !roomid.toString().replace(/ /g, '').length) {
                     callback(false, roomid, 'You did not enter the room-id.');
                     return;
                 }
 
-                if(!listOfRooms[roomid]) {
+                if (!listOfRooms[roomid]) {
+                    console.warn("is-valid-password -  room not present in list of rooms  ");
                     callback(false, roomid, CONST_STRINGS.ROOM_NOT_AVAILABLE);
                     return;
                 }
 
-                if(!listOfRooms[roomid].password) {
+                if (!listOfRooms[roomid].password) {
                     callback(false, roomid, 'This room do not have any password.');
                     return;
                 }
 
-                if(listOfRooms[roomid].password === password) {
+                if (listOfRooms[roomid].password === password) {
                     callback(true, roomid, false);
-                }
-                else {
+                } else {
                     callback(false, roomid, CONST_STRINGS.INVALID_PASSWORD);
                 }
-            }
-            catch(e) {
+            } catch (e) {
                 pushLogs('is-valid-password', e);
             }
         });
 
-        socket.on('get-public-rooms', function(identifier, callback) {
+        socket.on('get-public-rooms', function (identifier, callback) {
             try {
-                if(!identifier || !identifier.toString().length || !identifier.toString().replace(/ /g, '').length) {
+                if (!identifier || !identifier.toString().length || !identifier.toString().replace(/ /g, '').length) {
                     callback(null, CONST_STRINGS.PUBLIC_IDENTIFIER_MISSING);
                     return;
                 }
 
                 var rooms = [];
-                Object.keys(listOfRooms).forEach(function(key) {
+                Object.keys(listOfRooms).forEach(function (key) {
                     var room = listOfRooms[key];
-                    if(!room || !room.identifier || !room.identifier.toString().length || room.identifier !== identifier) return;
+                    if (!room || !room.identifier || !room.identifier.toString().length || room.identifier !== identifier) return;
                     rooms.push({
                         maxParticipantsAllowed: room.maxParticipantsAllowed,
                         owner: room.owner,
@@ -806,22 +818,23 @@ module.exports = exports = function(socket, config) {
                 });
 
                 callback(rooms);
-            }
-            catch(e) {
+            } catch (e) {
                 pushLogs('get-public-rooms', e);
             }
         });
 
-        socket.on('open-room', function(arg, callback) {
+        socket.on('open-room', function (arg, callback) {
             console.log("open-room", arg);
 
-            callback = callback || function() {};
+            callback = callback || function () {
+            };
 
             try {
                 // if already joined a room, either leave or close it
                 closeOrShiftRoom();
 
                 if (listOfRooms[arg.sessionid] && listOfRooms[arg.sessionid].participants.length) {
+                    console.warn("open-room -  cannnot open room ",arg.sessionid,"as its already open with peers ",  listOfRooms[arg.sessionid].participants.length);
                     callback(false, CONST_STRINGS.ROOM_NOT_AVAILABLE);
                     return;
                 }
@@ -870,7 +883,7 @@ module.exports = exports = function(socket, config) {
                     listOfRooms[arg.sessionid].socketCustomEvent = listOfUsers[socket.userid].socketCustomEvent;
                     listOfRooms[arg.sessionid].maxParticipantsAllowed = parseInt(params.maxParticipantsAllowed || 1000) || 1000;
 
-                    if(arg.identifier && arg.identifier.toString().length) {
+                    if (arg.identifier && arg.identifier.toString().length) {
                         listOfRooms[arg.sessionid].identifier = arg.identifier;
                     }
 
@@ -906,9 +919,10 @@ module.exports = exports = function(socket, config) {
             }
         });
 
-        socket.on('join-room', function(arg, callback) {
+        socket.on('join-room', function (arg, callback) {
             console.log("join-room", arg);
-            callback = callback || function() {};
+            callback = callback || function () {
+            };
 
             try {
                 // if already joined a room, either leave or close it
@@ -937,6 +951,7 @@ module.exports = exports = function(socket, config) {
 
             try {
                 if (!listOfRooms[arg.sessionid]) {
+                    console.warn("[join-room'] room not present to join - ", arg.sessionid)
                     callback(false, CONST_STRINGS.ROOM_NOT_AVAILABLE);
                     return;
                 }
@@ -988,7 +1003,7 @@ module.exports = exports = function(socket, config) {
             }
         });
 
-        socket.on('disconnect', function() {
+        socket.on('disconnect', function () {
             try {
                 if (socket && socket.namespace && socket.namespace.sockets) {
                     delete socket.namespace.sockets[this.id];
@@ -1022,8 +1037,7 @@ module.exports = exports = function(socket, config) {
                 try {
                     // scalable-broadcast.js
                     socket.ondisconnect();
-                }
-                catch(e) {
+                } catch (e) {
                     pushLogs('socket.ondisconnect', e);
                 }
             }
