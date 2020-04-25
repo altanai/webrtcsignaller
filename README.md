@@ -1,22 +1,44 @@
 # WebRTC socket.io signaller
 
-## To start signaller socket.io server 
+[Build Status]: https://travis-ci.org/altanai/webrtcsignaller
+[NPM Status]: https://www.npmjs.com/package/webrtcdevelopment_signaller
 
-```sh
-node server --ssl
+Signaller to mange the SDP offer/answer for webrtc app on socket.io. 
+To be used while deploying - webrtcdevelopment 
+https://github.com/altanai/webrtc/
+
+![alt webrtc development ](https://altanaitelecom.files.wordpress.com/2015/05/webrtc_development_logo.png?w=100&h=100)
+
+[![Gitter][GS image]][Gitter]
+[![Build Status][BS img]][Build Status]
+[![Dependency Status][DS img]][Dependency Status]
+[![NPM Status][NS img]][NPM Status]
+
+[Gitter]: https://gitter.im/altanai/webrtc?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge 
+[Build Status]: https://travis-ci.org/altanai/webrtc
+[Dependency Status]: https://david-dm.org/altanai/webrtc
+[NPM Status]: https://www.npmjs.com/package/webrtcdevelopment
+
+[GS img]: https://badges.gitter.im/altanai/webrtc.svg
+[BS img]: https://api.travis-ci.org/altanai/webrtc.png
+[DS img]: https://david-dm.org/altanai/webrtc.svg
+[NS img]: https://nodei.co/npm/webrtcdevelopment.png
+
+## Get the code 
+Download the npm module  
 ```
+npm i webrtcdevelopment_signaller
+```
+or Clone from the git repo 
+```
+git clone  git@github.com:altanai/webrtcsignaller.git
+```
+
 ## Integrate inside nodejs applications
 
-```javascript
-const ioServer = require('socket.io');
-const RTCMultiConnectionServer = require('rtcmulticonnection-server');
+One the source is download import the server lib and start the server 
 
-ioServer(httpApp).on('connection', function(socket) {
-    RTCMultiConnectionServer.addSocket(socket);
-});
-```
-
-Recommended node version v6.2.1
+Recommended node version >=v612
 Can manage node versions using nvm / node version manager 
 ```
 curl https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash
@@ -27,7 +49,7 @@ check nvm version
 nvm --version
 nvm list
 ```
-To install a speific node version 
+To install a spceific node version 
 ```
 vm install v6.2.1
 Downloading https://nodejs.org/dist/v6.2.1/node-v6.2.1-linux-x64.tar.xz...
@@ -42,15 +64,31 @@ node -v
 v6.2.1
 ```
 
+##Starting manually 
+
+### To start signaller socket.io server 
+
+```sh
+node server --ssl --port=8085
+```
+
 ## Start server with forever 
 
+First download forever
 ```
 npm install forever -g
-forever start server.js --ssl
+```
+start forever with options secure server and port 
+```
+forever start server.js --ssl --port=8085
 ```
 
 ## Help 
 
+
+
+To see help related to server 
+```
 node server.js --help
 You can manage configuration in the "config.json" file.
 Or use following commands:
@@ -89,4 +127,14 @@ Here is list of all config parameters:
 	/admin/ page's username.
 --adminPassword=password
 	/admin/ page's password.
+```
 
+## Reporting a Vulnerability
+
+Create an issues 
+https://github.com/altanai/webrtc/issues <https://github.com/altanai/webrtc/issues>
+     
+### License
+----
+
+MIT
