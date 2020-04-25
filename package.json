@@ -4,6 +4,7 @@
   "description": "webrtc socket.io signaller",
   "main": "server.js",
   "dependencies": {
+    "redis": "^3.0.2",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {},
