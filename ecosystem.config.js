@@ -10,6 +10,7 @@ module.exports = {
         },
         watch: true,
         exec_mode: "cluster",
+        instances: 1,
         args: "--ssl --port 8085"
     }
         // {
