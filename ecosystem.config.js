@@ -10,8 +10,7 @@ module.exports = {
         },
         watch: true,
         exec_mode: "cluster",
-        args: "--ssl"
-
+        args: "--ssl --port 8085"
     }
         // {
         //   script: './service-worker/',
@@ -24,7 +23,7 @@ module.exports = {
             user: 'SSH_USERNAME',
             host: 'SSH_HOSTMACHINE',
             ref: 'origin/master',
-            repo: 'GIT_REPOSITORY',
+            repo: ' git@github.com:altanai/webrtcsignaller.git',
             path: 'DESTINATION_PATH',
             'pre-deploy-local': '',
             'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production',
