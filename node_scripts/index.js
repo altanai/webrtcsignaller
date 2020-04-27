@@ -1,7 +1,3 @@
-// Muaz Khan      - www.MuazKhan.com
-// MIT License    - www.WebRTC-Experiment.com/licence
-// Documentation  - github.com/muaz-khan/RTCMultiConnection
-
 module.exports = {
     resolveURL: require('./resolveURL.js'),
     BASH_COLORS_HELPER: require('./BASH_COLORS_HELPER.js'),
