@@ -201,11 +201,7 @@ httpApp = httpApp.listen(process.env.PORT || PORT, process.env.IP || "0.0.0.0", 
 });
 
 ioServer(httpApp).on('connection', function(socket) {
-<<<<<<< HEAD
     rtcserver.addSocket(socket, config);
-=======
-    RTCMultiConnectionServer.addSocket(socket, config);
->>>>>>> master
 
     const params = socket.handshake.query;
 
