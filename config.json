@@ -8,9 +8,9 @@
   "enableLogs": "true",
   "autoRebootServerOnFailure": "true",
   "isUseHTTPs": "false",
-  "sslKey": "../brightchats_sslcerts_2020/brightchats.key",
-  "sslCert": "../brightchats_sslcerts_2020/1f1aacb6b8a45b2b.crt",
-  "sslCabundle": "../brightchats_sslcerts_2020/gd_bundle-g2-g1.crt",
+  "sslKey": "ssl_certs/server.key",
+  "sslCert": "ssl_certs/server.crt",
+  "sslCabundle": "ssl_certs/ca.crt",
   "enableAdmin": "false",
   "adminUserName": "username",
   "adminPassword": "password"
