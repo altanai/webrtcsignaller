@@ -17,9 +17,9 @@ const jsonPath = {
     logs: 'logs.json'
 };
 
-const BASH_COLORS_HELPER = server.BASH_COLORS_HELPER;
-const getValuesFromConfigJson = server.getValuesFromConfigJson;
-const getBashParameters = server.getBashParameters;
+const BASH_COLORS_HELPER = rtcserver.BASH_COLORS_HELPER;
+// const getValuesFromConfigJson = server.getValuesFromConfigJson;
+const getBashParameters = rtcserver.getBashParameters;
 
 function getValuesFromConfigJson(param) {
 
@@ -43,33 +43,27 @@ function getValuesFromConfigJson(param) {
         adminPassword: null
     };
 
-    if (!fs.existsSync( param.config)) {
+    if (!fs.existsSync(param.config)) {
         console.log('File does not exist', param.config);
-        console.log("------------- read from external config ", config );
+        console.log("------------- read from external config ", config);
         return result;
-    }else{
-        var json = fs.readFileSync( param.config);
+    } else {
+        var json = fs.readFileSync(param.config);
         config = JSON.parse(json);
-        console.log("------------- read from external config ", param.config , config );
+        console.log("------------- read from external config ", param.config, config);
     }
 
-    ['sslKey', 'sslCert', 'sslCabundle'].forEach(function(key) {
+    ['sslKey', 'sslCert', 'sslCabundle'].forEach(function (key) {
         if (!config[key] || config[key].toString().length == 0) {
             return;
         }
 
         if (config[key].indexOf('/path/to/') === -1) {
-            if (key === 'sslKey') {
-                result.sslKey = config['sslKey'];
-            }
+            if (key === 'sslKey') result.sslKey = config['sslKey'];
 
-            if (key === 'sslCert') {
-                result.sslCert = config['sslCert'];
-            }
+            if (key === 'sslCert') result.sslCert = config['sslCert'];
 
-            if (key === 'sslCabundle') {
-                result.sslCabundle = config['sslCabundle'];
-            }
+            if (key === 'sslCabundle') result.sslCabundle = config['sslCabundle'];
         }
     });
 
@@ -163,7 +157,7 @@ if (isUseHTTPs) {
 
     var pfx = false;
 
-    console.log(" --------------------- Final config  " , config);
+    console.log(" --------------------- Final config  ", config);
     // config.sslKey = "./ssl_certs/server.key";
     // config.sslCert = "./ssl_certs/server.crt";
 
@@ -199,11 +193,11 @@ if (isUseHTTPs) {
 }
 
 rtcserver.beforeHttpListen(httpApp, config);
-httpApp = httpApp.listen(process.env.PORT || PORT, process.env.IP || "0.0.0.0", function() {
+httpApp = httpApp.listen(process.env.PORT || PORT, process.env.IP || "0.0.0.0", function () {
     rtcserver.afterHttpListen(httpApp, config);
 });
 
-ioServer(httpApp).on('connection', function(socket) {
+ioServer(httpApp).on('connection', function (socket) {
     rtcserver.addSocket(socket, config);
 
     const params = socket.handshake.query;
