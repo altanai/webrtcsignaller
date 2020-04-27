@@ -1,9 +1,10 @@
 {
   "name": "webrtcdevelopment_signaller",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "webrtc socket.io signaller",
   "main": "server.js",
   "dependencies": {
+    "redis": "^3.0.2",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {},
