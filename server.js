@@ -45,12 +45,12 @@ function getValuesFromConfigJson(param) {
 
     if (!fs.existsSync(param.config)) {
         console.log('File does not exist', param.config);
-        console.log("------------- read from external config ", config);
+        console.log("read from external config ", config);
         return result;
     } else {
         var json = fs.readFileSync(param.config);
         config = JSON.parse(json);
-        console.log("------------- read from external config ", param.config, config);
+        console.log("read from external config ", param.config, config);
     }
 
     ['sslKey', 'sslCert', 'sslCabundle'].forEach(function (key) {
@@ -59,11 +59,11 @@ function getValuesFromConfigJson(param) {
         }
 
         if (config[key].indexOf('/path/to/') === -1) {
-            if (key === 'sslKey') result.sslKey = config['sslKey'];
+            if (key === 'sslKey') result.sslKey = config.sslKey;
 
-            if (key === 'sslCert') result.sslCert = config['sslCert'];
+            if (key === 'sslCert') result.sslCert = config.sslCert;
 
-            if (key === 'sslCabundle') result.sslCabundle = config['sslCabundle'];
+            if (key === 'sslCabundle') result.sslCabundle = config.sslCabundle;
         }
     });
 
