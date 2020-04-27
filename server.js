@@ -5,11 +5,10 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 var httpServer = require('http');
-
 const ioServer = require('socket.io');
-const RTCMultiConnectionServer = require('./node_scripts/index.js');
+const server = require('./node_scripts/index.js');
 
-var PORT = 8085;
+var PORT;
 var isUseHTTPs = false;
 
 const jsonPath = {
@@ -17,21 +16,20 @@ const jsonPath = {
     logs: 'logs.json'
 };
 
-const BASH_COLORS_HELPER = RTCMultiConnectionServer.BASH_COLORS_HELPER;
-const getValuesFromConfigJson = RTCMultiConnectionServer.getValuesFromConfigJson;
-const getBashParameters = RTCMultiConnectionServer.getBashParameters;
+const BASH_COLORS_HELPER = server.BASH_COLORS_HELPER;
+const getValuesFromConfigJson = server.getValuesFromConfigJson;
+const getBashParameters = server.getBashParameters;
 
 var config = getValuesFromConfigJson(jsonPath);
 config = getBashParameters(config, BASH_COLORS_HELPER);
 
-// if user didn't modifed "PORT" object
-// then read value from "config.json"
-if(PORT === 8085) {
+if (!PORT) {
     PORT = config.port;
+} else {
+    PORT = 8085;
 }
-PORT = 8085;
 
-if(isUseHTTPs === false) {
+if (isUseHTTPs === false) {
     isUseHTTPs = config.isUseHTTPs;
 }
 
@@ -61,9 +59,9 @@ if (isUseHTTPs) {
 
     var pfx = false;
 
-    console.log(" ------------------- config --------------------- " , config);
+    console.log(" ------------------- config --------------------- ", config);
 
-    config.sslKey="./ssl_certs/server.key";
+    config.sslKey = "./ssl_certs/server.key";
     config.sslCert = "./ssl_certs/server.crt";
 
     if (!fs.existsSync(config.sslKey)) {
@@ -98,13 +96,13 @@ if (isUseHTTPs) {
     httpApp = httpServer.createServer(serverHandler);
 }
 
-RTCMultiConnectionServer.beforeHttpListen(httpApp, config);
-httpApp = httpApp.listen(process.env.PORT || PORT, process.env.IP || "0.0.0.0", function() {
-    RTCMultiConnectionServer.afterHttpListen(httpApp, config);
+server.beforeHttpListen(httpApp, config);
+httpApp = httpApp.listen(process.env.PORT || PORT, process.env.IP || "0.0.0.0", function () {
+    server.afterHttpListen(httpApp, config);
 });
 
-ioServer(httpApp).on('connection', function(socket) {
-    RTCMultiConnectionServer.addSocket(socket, config);
+ioServer(httpApp).on('connection', function (socket) {
+    server.addSocket(socket, config);
 
     const params = socket.handshake.query;
 
@@ -112,7 +110,7 @@ ioServer(httpApp).on('connection', function(socket) {
         params.socketCustomEvent = 'custom-message';
     }
 
-    socket.on(params.socketCustomEvent, function(message) {
+    socket.on(params.socketCustomEvent, function (message) {
         socket.broadcast.emit(params.socketCustomEvent, message);
     });
 });
