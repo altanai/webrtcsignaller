@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 function getJsonFile(path) {
     var fs = require('fs');
     var output = {};
@@ -14,4 +13,4 @@ function getJsonFile(path) {
 }
 
 module.exports = exports = getJsonFile;
->>>>>>> master
+

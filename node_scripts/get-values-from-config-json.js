@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 function getValues(param) {
     var path = require('path');
     var fs = require('fs');
@@ -31,7 +29,7 @@ function getValues(param) {
 
     var config = getJsonFile(param.config);
 
-    ['sslKey', 'sslCert', 'sslCabundle'].forEach(function(key) {
+    ['sslKey', 'sslCert', 'sslCabundle'].forEach(function (key) {
         if (!config[key] || config[key].toString().length == 0) {
             return;
         }
@@ -103,4 +101,4 @@ function getValues(param) {
 }
 
 module.exports = exports = getValues;
->>>>>>> master
+

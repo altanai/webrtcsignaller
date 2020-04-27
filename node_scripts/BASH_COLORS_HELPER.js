@@ -1,8 +1,3 @@
-// Muaz Khan      - www.MuazKhan.com
-// MIT License    - www.WebRTC-Experiment.com/licence
-// Documentation  - github.com/muaz-khan/RTCMultiConnection
-
-// via: stackoverflow.com/a/41407246/552182
 var BASH_COLORS_HELPER = {
     getBlackFG: function(str) {
         return '\x1b[30m' + (str || '%s') + '\x1b[0m';

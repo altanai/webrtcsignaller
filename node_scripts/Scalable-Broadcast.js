@@ -1,7 +1,3 @@
-// Muaz Khan      - www.MuazKhan.com
-// MIT License    - www.WebRTC-Experiment.com/licence
-// Documentation  - github.com/muaz-khan/RTCMultiConnection
-
 // pushLogs is used to write error logs into logs.json
 var pushLogs = require('./pushLogs.js');
 
