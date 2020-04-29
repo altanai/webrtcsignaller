@@ -5,11 +5,11 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 var httpServer = require('http');
-
 const ioServer = require('socket.io');
 const rtcserver = require('./node_scripts/index.js');
 
-var PORT = 8085;
+
+var PORT;
 var isUseHTTPs = false;
 
 const jsonPath = {
@@ -18,6 +18,7 @@ const jsonPath = {
 };
 
 const BASH_COLORS_HELPER = rtcserver.BASH_COLORS_HELPER;
+// const getValuesFromConfigJson = server.getValuesFromConfigJson;
 const getBashParameters = rtcserver.getBashParameters;
 
 function getValuesFromConfigJson(param) {
@@ -42,33 +43,27 @@ function getValuesFromConfigJson(param) {
         adminPassword: null
     };
 
-    if (!fs.existsSync( param.config)) {
+    if (!fs.existsSync(param.config)) {
         console.log('File does not exist', param.config);
-        console.log("------------- read from external config ", config );
+        console.log("read from external config ", config);
         return result;
-    }else{
-        var json = fs.readFileSync( param.config);
+    } else {
+        var json = fs.readFileSync(param.config);
         config = JSON.parse(json);
-        console.log("------------- read from external config ", param.config , config );
+        console.log("read from external config ", param.config, config);
     }
 
-    ['sslKey', 'sslCert', 'sslCabundle'].forEach(function(key) {
+    ['sslKey', 'sslCert', 'sslCabundle'].forEach(function (key) {
         if (!config[key] || config[key].toString().length == 0) {
             return;
         }
 
         if (config[key].indexOf('/path/to/') === -1) {
-            if (key === 'sslKey') {
-                result.sslKey = config['sslKey'];
-            }
+            if (key === 'sslKey') result.sslKey = config.sslKey;
 
-            if (key === 'sslCert') {
-                result.sslCert = config['sslCert'];
-            }
+            if (key === 'sslCert') result.sslCert = config.sslCert;
 
-            if (key === 'sslCabundle') {
-                result.sslCabundle = config['sslCabundle'];
-            }
+            if (key === 'sslCabundle') result.sslCabundle = config.sslCabundle;
         }
     });
 
@@ -126,13 +121,13 @@ function getValuesFromConfigJson(param) {
 var config = getValuesFromConfigJson(jsonPath);
 config = getBashParameters(config, BASH_COLORS_HELPER);
 
-// if user didn't modifed "PORT" object
-// then read value from "config.json"
-if(PORT === 8085) {
+if (!PORT) {
     PORT = config.port;
+} else {
+    PORT = 8085;
 }
 
-if(isUseHTTPs === false) {
+if (isUseHTTPs === false) {
     isUseHTTPs = config.isUseHTTPs;
 }
 
@@ -162,7 +157,9 @@ if (isUseHTTPs) {
 
     var pfx = false;
 
-    console.log(" --------------------- Final config  " , config);
+    console.log(" --------------------- Final config  ", config);
+    // config.sslKey = "./ssl_certs/server.key";
+    // config.sslCert = "./ssl_certs/server.crt";
 
     if (!fs.existsSync(config.sslKey)) {
         console.log(BASH_COLORS_HELPER.getRedFG(), 'sslKey:\t ' + config.sslKey + ' does not exist.');
@@ -196,11 +193,11 @@ if (isUseHTTPs) {
 }
 
 rtcserver.beforeHttpListen(httpApp, config);
-httpApp = httpApp.listen(process.env.PORT || PORT, process.env.IP || "0.0.0.0", function() {
+httpApp = httpApp.listen(process.env.PORT || PORT, process.env.IP || "0.0.0.0", function () {
     rtcserver.afterHttpListen(httpApp, config);
 });
 
-ioServer(httpApp).on('connection', function(socket) {
+ioServer(httpApp).on('connection', function (socket) {
     rtcserver.addSocket(socket, config);
 
     const params = socket.handshake.query;
@@ -209,7 +206,7 @@ ioServer(httpApp).on('connection', function(socket) {
         params.socketCustomEvent = 'custom-message';
     }
 
-    socket.on(params.socketCustomEvent, function(message) {
+    socket.on(params.socketCustomEvent, function (message) {
         socket.broadcast.emit(params.socketCustomEvent, message);
     });
 });
