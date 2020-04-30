@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "webrtc socket.io signaller",
   "main": "server.js",
-  "dependencies": {},
+  "dependencies": {
+    "webrtcdevelopment": "^4.8.23"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
