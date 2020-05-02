@@ -8,7 +8,6 @@ var httpServer = require('http');
 const ioServer = require('socket.io');
 const rtcserver = require('./node_scripts/index.js');
 
-
 var PORT;
 var isUseHTTPs = false;
 
@@ -60,9 +59,7 @@ function getValuesFromConfigJson(param) {
 
         if (config[key].indexOf('/path/to/') === -1) {
             if (key === 'sslKey') result.sslKey = config.sslKey;
-
             if (key === 'sslCert') result.sslCert = config.sslCert;
-
             if (key === 'sslCabundle') result.sslCabundle = config.sslCabundle;
         }
     });
@@ -158,8 +155,6 @@ if (isUseHTTPs) {
     var pfx = false;
 
     console.log(" --------------------- Final config  ", config);
-    // config.sslKey = "./ssl_certs/server.key";
-    // config.sslCert = "./ssl_certs/server.crt";
 
     if (!fs.existsSync(config.sslKey)) {
         console.log(BASH_COLORS_HELPER.getRedFG(), 'sslKey:\t ' + config.sslKey + ' does not exist.');
@@ -186,7 +181,6 @@ if (isUseHTTPs) {
             pfx: sslKey
         };
     }
-
     httpApp = httpServer.createServer(options, serverHandler);
 } else {
     httpApp = httpServer.createServer(serverHandler);
