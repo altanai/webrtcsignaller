@@ -11,6 +11,7 @@
   "isUseHTTPs": "true",
   "sslKey": "ssl_certs/server.key",
   "sslCert": "ssl_certs/server.crt",
+  "sslCabundle": "ssl_certs/ca.crt",
   "enableAdmin": "true",
   "adminUserName": "username",
   "adminPassword": "password"
