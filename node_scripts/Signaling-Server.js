@@ -6,9 +6,6 @@ var adminSocket;
 // for scalable-broadcast demos
 var ScalableBroadcast;
 
-// pushLogs is used to write error logs into logs.json
-var pushLogs = require('./pushLogs.js');
-
 // const strings
 var CONST_STRINGS = require('./CONST_STRINGS.js');
 
@@ -45,7 +42,7 @@ module.exports = exports = function (socket, config) {
                 socketCustomEvent: params.socketCustomEvent || ''
             };
         } catch (e) {
-            pushLogs(config, 'appendUser', e);
+            console.log(config, 'appendUser', e);
         }
 
         sendToAdmin();
@@ -79,7 +76,7 @@ module.exports = exports = function (socket, config) {
                             connectedWith: Object.keys(item.connectedWith)
                         });
                     } catch (e) {
-                        pushLogs(config, 'admin.user-looper', e);
+                        console.log(config, 'admin.user-looper', e);
                     }
                 });
 
@@ -96,7 +93,7 @@ module.exports = exports = function (socket, config) {
                 });
             }
         } catch (e) {
-            pushLogs(config, 'admin', e);
+            console.error(config, 'admin', e);
         }
     }
 
@@ -106,7 +103,7 @@ module.exports = exports = function (socket, config) {
                 error: 'Please pass "adminUserName" and "adminPassword" via socket.io parameters.'
             });
 
-            pushLogs(config, 'invalid-admin', {
+            console.log(config, 'invalid-admin', {
                 message: CONST_STRINGS.INVALID_ADMIN_CREDENTIAL,
                 stack: 'name: ' + params.adminUserName + '\n' + 'password: ' + params.adminPassword
             });
@@ -120,7 +117,7 @@ module.exports = exports = function (socket, config) {
                 error: 'Invalid admin username or password.'
             });
 
-            pushLogs(config, 'invalid-admin', {
+            console.log(config, 'invalid-admin', {
                 message: CONST_STRINGS.INVALID_ADMIN_CREDENTIAL,
                 stack: 'name: ' + params.adminUserName + '\n' + 'password: ' + params.adminPassword
             });
@@ -140,7 +137,7 @@ module.exports = exports = function (socket, config) {
                     error: 'Invalid admin username or password.'
                 });
 
-                pushLogs(config, 'invalid-admin', {
+                console.log(config, 'invalid-admin', {
                     message: CONST_STRINGS.INVALID_ADMIN_CREDENTIAL,
                     stack: 'name: ' + params.adminUserName + '\n' + 'password: ' + params.adminPassword
                 });
@@ -167,13 +164,13 @@ module.exports = exports = function (socket, config) {
                         });
                     }
                 } catch (e) {
-                    pushLogs(config, 'userinfo', e);
+                    console.log(config, 'userinfo', e);
                 }
             }
 
             if (message.clearLogs === true) {
                 // last callback parameter will force to clear logs
-                pushLogs(config, '', '', callback);
+                console.log(config, '', '', callback);
             }
 
             if (message.deleteUser === true) {
@@ -191,7 +188,7 @@ module.exports = exports = function (socket, config) {
                     // delete listOfUsers[message.userid];
                     callback(true);
                 } catch (e) {
-                    pushLogs(config, 'deleteUser', e);
+                    console.log(config, 'deleteUser', e);
                     callback(false);
                 }
             }
@@ -212,7 +209,7 @@ module.exports = exports = function (socket, config) {
                     }
                     callback(true);
                 } catch (e) {
-                    pushLogs(config, 'deleteRoom', e);
+                    console.log(config, 'deleteRoom', e);
                     callback(false);
                 }
             }
@@ -264,7 +261,7 @@ module.exports = exports = function (socket, config) {
                 }
                 ScalableBroadcast._ = ScalableBroadcast(config, socket, params.maxRelayLimitPerUser);
             } catch (e) {
-                pushLogs(config, 'ScalableBroadcast', e);
+                console.log(config, 'ScalableBroadcast', e);
             }
         }
 
@@ -296,11 +293,11 @@ module.exports = exports = function (socket, config) {
                         try {
                             listOfUsers[user].socket.emit('extra-data-updated', socket.userid, extra);
                         } catch (e) {
-                            pushLogs(config, 'extra-data-updated.connectedWith', e);
+                            console.log(config, 'extra-data-updated.connectedWith', e);
                         }
                     }
                 } catch (e) {
-                    pushLogs(config, 'extra-data-updated.connectedWith', e);
+                    console.log(config, 'extra-data-updated.connectedWith', e);
                 }
 
                 // sent alert to all room participants
@@ -325,14 +322,14 @@ module.exports = exports = function (socket, config) {
 
                             user.socket.emit('extra-data-updated', socket.userid, extra);
                         } catch (e) {
-                            pushLogs(config, 'extra-data-updated.participants', e);
+                            console.log(config, 'extra-data-updated.participants', e);
                         }
                     });
                 }
 
                 sendToAdmin();
             } catch (e) {
-                pushLogs(config, 'extra-data-updated', e);
+                console.log(config, 'extra-data-updated', e);
             }
         });
 
@@ -385,7 +382,7 @@ module.exports = exports = function (socket, config) {
 
                 callback();
             } catch (e) {
-                pushLogs(config, 'changed-uuid', e);
+                console.log(config, 'changed-uuid', e);
             }
         });
 
@@ -408,7 +405,7 @@ module.exports = exports = function (socket, config) {
                     callback(false, roomid, CONST_STRINGS.ROOM_PERMISSION_DENIED);
                 }
             } catch (e) {
-                pushLogs(config, 'set-password', e);
+                console.log(config, 'set-password', e);
             }
         });
 
@@ -429,7 +426,7 @@ module.exports = exports = function (socket, config) {
                 }
                 callback();
             } catch (e) {
-                pushLogs(config, 'disconnect-with', e);
+                console.log(config, 'disconnect-with', e);
             }
         });
 
@@ -468,7 +465,7 @@ module.exports = exports = function (socket, config) {
 
                 callback(true);
             } catch (e) {
-                pushLogs(config, 'close-entire-session', e);
+                console.log(config, 'close-entire-session', e);
             }
         });
 
@@ -497,7 +494,7 @@ module.exports = exports = function (socket, config) {
                     callback(true, roomid, extra);
                 }
             } catch (e) {
-                pushLogs(config, 'check-presence', e);
+                console.log(config, 'check-presence', e);
             }
         });
 
@@ -541,7 +538,7 @@ module.exports = exports = function (socket, config) {
                     sendToAdmin();
                 }
             } catch (e) {
-                pushLogs(config, 'onMessageCallback', e);
+                console.log(config, 'onMessageCallback', e);
             }
         }
 
@@ -591,7 +588,7 @@ module.exports = exports = function (socket, config) {
                     });
                 }
             } catch (e) {
-                pushLogs(config, 'joinARoom', e);
+                console.log(config, 'joinARoom', e);
             }
 
             sendToAdmin();
@@ -619,7 +616,7 @@ module.exports = exports = function (socket, config) {
                 if (listOfRooms[roomid].participants.indexOf(userid) !== -1) return;
                 listOfRooms[roomid].participants.push(userid);
             } catch (e) {
-                pushLogs(config, 'appendToRoom', e);
+                console.log(config, 'appendToRoom', e);
             }
         }
 
@@ -673,7 +670,7 @@ module.exports = exports = function (socket, config) {
                     }
                 }
             } catch (e) {
-                pushLogs(config, 'closeOrShiftRoom', e);
+                console.log(config, 'closeOrShiftRoom', e);
             }
         }
 
@@ -754,7 +751,7 @@ module.exports = exports = function (socket, config) {
 
                 onMessageCallback(message);
             } catch (e) {
-                pushLogs(config, 'on-socketMessageEvent', e);
+                console.log(config, 'on-socketMessageEvent', e);
             }
         });
 
@@ -790,7 +787,7 @@ module.exports = exports = function (socket, config) {
                     callback(false, roomid, CONST_STRINGS.INVALID_PASSWORD);
                 }
             } catch (e) {
-                pushLogs('is-valid-password', e);
+                console.log('is-valid-password', e);
             }
         });
 
@@ -819,7 +816,7 @@ module.exports = exports = function (socket, config) {
 
                 callback(rooms);
             } catch (e) {
-                pushLogs('get-public-rooms', e);
+                console.log('get-public-rooms', e);
             }
         });
 
@@ -861,7 +858,7 @@ module.exports = exports = function (socket, config) {
                     autoCloseEntireSession = true;
                 }
             } catch (e) {
-                pushLogs(config, 'open-room', e);
+                console.log(config, 'open-room', e);
             }
 
             // append this user into participants list
@@ -893,7 +890,7 @@ module.exports = exports = function (socket, config) {
                             listOfRooms[arg.sessionid].password = arg.password;
                         }
                     } catch (e) {
-                        pushLogs(config, 'open-room.password', e);
+                        console.log(config, 'open-room.password', e);
                     }
                 }
 
@@ -907,7 +904,7 @@ module.exports = exports = function (socket, config) {
                     extra: arg.extra
                 };
             } catch (e) {
-                pushLogs(config, 'open-room', e);
+                console.log(config, 'open-room', e);
             }
 
             sendToAdmin();
@@ -915,7 +912,7 @@ module.exports = exports = function (socket, config) {
             try {
                 callback(true);
             } catch (e) {
-                pushLogs(config, 'open-room', e);
+                console.log(config, 'open-room', e);
             }
         });
 
@@ -946,7 +943,7 @@ module.exports = exports = function (socket, config) {
                 }
                 listOfUsers[socket.userid].extra = arg.extra;
             } catch (e) {
-                pushLogs(config, 'join-room', e);
+                console.log(config, 'join-room', e);
             }
 
             try {
@@ -956,7 +953,7 @@ module.exports = exports = function (socket, config) {
                     return;
                 }
             } catch (e) {
-                pushLogs(config, 'join-room', e);
+                console.log(config, 'join-room', e);
             }
 
             try {
@@ -965,7 +962,7 @@ module.exports = exports = function (socket, config) {
                     return;
                 }
             } catch (e) {
-                pushLogs(config, 'join-room.password', e);
+                console.log(config, 'join-room.password', e);
             }
 
             try {
@@ -974,7 +971,7 @@ module.exports = exports = function (socket, config) {
                     return;
                 }
             } catch (e) {
-                pushLogs(config, 'join-room.ROOM_FULL', e);
+                console.log(config, 'join-room.ROOM_FULL', e);
             }
 
             // append this user into participants list
@@ -991,7 +988,7 @@ module.exports = exports = function (socket, config) {
                     extra: arg.extra
                 };
             } catch (e) {
-                pushLogs(config, 'join-room', e);
+                console.log(config, 'join-room', e);
             }
 
             sendToAdmin();
@@ -999,7 +996,7 @@ module.exports = exports = function (socket, config) {
             try {
                 callback(true);
             } catch (e) {
-                pushLogs(config, 'join-room', e);
+                console.log(config, 'join-room', e);
             }
         });
 
@@ -1009,7 +1006,7 @@ module.exports = exports = function (socket, config) {
                     delete socket.namespace.sockets[this.id];
                 }
             } catch (e) {
-                pushLogs(config, 'disconnect', e);
+                console.log(config, 'disconnect', e);
             }
 
             try {
@@ -1026,7 +1023,7 @@ module.exports = exports = function (socket, config) {
                     }
                 }
             } catch (e) {
-                pushLogs(config, 'disconnect', e);
+                console.log(config, 'disconnect', e);
             }
 
             closeOrShiftRoom();
@@ -1038,7 +1035,7 @@ module.exports = exports = function (socket, config) {
                     // scalable-broadcast.js
                     socket.ondisconnect();
                 } catch (e) {
-                    pushLogs('socket.ondisconnect', e);
+                    console.log('socket.ondisconnect', e);
                 }
             }
 

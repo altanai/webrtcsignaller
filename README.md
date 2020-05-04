@@ -83,7 +83,7 @@ npm install forever -g
 ```
 start forever with options secure server and port 
 ```shell script
-forever start server.js --ssl --port=8085
+forever start signaller.js --ssl --port=8085
 ```
 
 
@@ -165,13 +165,13 @@ grep -c ^processor /proc/cpuinfo
 
 To see help related to server 
 ```shell script
-node server.js --help
+node signaller.js --help
 You can manage configuration in the "config.json" file.
 Or use following commands:
-	node server.js
-	node server.js --port=9002
-	node server.js --port=9002 --ssl
-	node server.js --port=9002 --ssl --sslKey=/home/ssl/ssl.key --sslCert=/home/ssl/ssl.crt
+	node signaller.js
+	node signaller.js --port=9002
+	node signaller.js --port=9002 --ssl
+	node signaller.js --port=9002 --ssl --sslKey=/home/ssl/ssl.key --sslCert=/home/ssl/ssl.crt
 
 
 Here is list of all config parameters:
@@ -192,7 +192,7 @@ Here is list of all config parameters:
 --dependencies
 	Check all RTCMultiConnection dependencies.
 --autoRebootServerOnFailure=false
-	Disable auto-restart server.js on failure.
+	Disable auto-restart signaller.js on failure.
 --dirPath=/var/www/html/
 	Directory path that is used for HTML/CSS/JS content delivery.
 --homePage=/demos/Video-Conferencing.html

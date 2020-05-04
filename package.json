@@ -2,7 +2,7 @@
   "name": "webrtcdevelopment_signaller",
   "version": "2.0.1",
   "description": "webrtc socket.io signaller",
-  "main": "server.js",
+  "main": "signaller.js",
   "dependencies": {
     "redis": "^3.0.2",
     "socket.io": "^2.3.0",
@@ -11,7 +11,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node signaller.js --ssl"
   },
   "jshintConfig": {
     "node": true,
@@ -27,6 +27,6 @@
     "communication",
     "webrtc development"
   ],
-  "author": "altanai",
-  "license": "ISC"
+  "author": "altanai <tara181989@gmail.com>",
+  "license": "MIT"
 }

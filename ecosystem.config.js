@@ -1,7 +1,7 @@
 module.exports = {
     apps: [{
         name: "signaller",
-        script: 'server.js',
+        script: 'signaller.js',
         env: {
             NODE_ENV: "development",
         },

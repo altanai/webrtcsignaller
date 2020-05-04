@@ -6,12 +6,12 @@ module.exports = exports = function(config, BASH_COLORS_HELPER) {
     });
 
     argv_array.forEach(function(val) {
-        // node server.js --ssl
+        // node signaller.js --ssl
         if (val === '--ssl') {
             config.isUseHTTPs = true;
         }
 
-        // node server.js --isUseHTTPs=true
+        // node signaller.js --isUseHTTPs=true
         if (val.indexOf('--isUseHTTPs') === 0) {
             var inner = val.split('--isUseHTTPs=')[1];
             if (inner) {
@@ -20,12 +20,12 @@ module.exports = exports = function(config, BASH_COLORS_HELPER) {
             }
         }
 
-        // node server.js --autoRebootServerOnFailure=true
+        // node signaller.js --autoRebootServerOnFailure=true
         if (val.indexOf('--autoRebootServerOnFailure=true') === 0) {
             config.autoRebootServerOnFailure = true;
         }
 
-        // node server.js --port=9002
+        // node signaller.js --port=9002
         if (val.indexOf('--port') === 0) {
             var inner = val.split('--port=')[1];
             if (inner) {
@@ -34,7 +34,7 @@ module.exports = exports = function(config, BASH_COLORS_HELPER) {
             }
         }
 
-        // node server.js --dirPath=/var/www/html/
+        // node signaller.js --dirPath=/var/www/html/
         if (val.indexOf('--dirPath') === 0) {
             var inner = val.split('--dirPath=')[1];
             if (inner) {
@@ -43,7 +43,7 @@ module.exports = exports = function(config, BASH_COLORS_HELPER) {
             }
         }
 
-        // node server.js --homePage=/demos/Video-Conferencing.html
+        // node signaller.js --homePage=/demos/Video-Conferencing.html
         if (val.indexOf('--homePage') === 0) {
             var inner = val.split('--homePage=')[1];
             if (inner) {
@@ -52,12 +52,12 @@ module.exports = exports = function(config, BASH_COLORS_HELPER) {
             }
         }
 
-        // node server.js --enableAdmin=true
+        // node signaller.js --enableAdmin=true
         if (val.indexOf('--enableAdmin=true') === 0) {
             config.enableAdmin = true;
         }
 
-        // node server.js --adminUserName=username
+        // node signaller.js --adminUserName=username
         if (val.indexOf('--adminUserName') === 0) {
             var inner = val.split('--adminUserName=')[1];
             if (inner) {
@@ -66,7 +66,7 @@ module.exports = exports = function(config, BASH_COLORS_HELPER) {
             }
         }
 
-        // node server.js --adminPassword=password
+        // node signaller.js --adminPassword=password
         if (val.indexOf('--adminPassword') === 0) {
             var inner = val.split('--adminPassword=')[1];
             if (inner) {
@@ -75,7 +75,7 @@ module.exports = exports = function(config, BASH_COLORS_HELPER) {
             }
         }
 
-        // node server.js --sslKey=/home/ssl/ssl.key
+        // node signaller.js --sslKey=/home/ssl/ssl.key
         if (val.indexOf('--sslKey') === 0) {
             var inner = val.split('--sslKey=')[1];
             if (inner) {
@@ -84,7 +84,7 @@ module.exports = exports = function(config, BASH_COLORS_HELPER) {
             }
         }
 
-        // node server.js --sslCert=/home/ssl/ssl.crt
+        // node signaller.js --sslCert=/home/ssl/ssl.crt
         if (val.indexOf('--sslCert') === 0) {
             var inner = val.split('--sslCert=')[1];
             if (inner) {
@@ -93,7 +93,7 @@ module.exports = exports = function(config, BASH_COLORS_HELPER) {
             }
         }
 
-        // node server.js --sslCabundle=/home/ssl/ssl.cab
+        // node signaller.js --sslCabundle=/home/ssl/ssl.cab
         if (val.indexOf('--sslCabundle') === 0) {
             var inner = val.split('--sslCabundle=')[1];
             if (inner) {
@@ -102,7 +102,7 @@ module.exports = exports = function(config, BASH_COLORS_HELPER) {
             }
         }
 
-        // node server.js --version
+        // node signaller.js --version
         if (val === '--version') {
             var json = require(path.join(__dirname, resolveURL('package.json')));
             console.log('\n');
@@ -110,7 +110,7 @@ module.exports = exports = function(config, BASH_COLORS_HELPER) {
             process.exit(1);
         }
 
-        // node server.js --dependencies
+        // node signaller.js --dependencies
         if (val === '--dependencies') {
             var json = require(path.join(__dirname, resolveURL('package.json')));
             console.log('\n');
@@ -122,17 +122,17 @@ module.exports = exports = function(config, BASH_COLORS_HELPER) {
             process.exit(1);
         }
 
-        // node server.js --help
+        // node signaller.js --help
         if (val === '--help') {
             console.log('\n');
             console.log('You can manage configuration in the "config.json" file.');
 
             console.log('\n');
             console.log(BASH_COLORS_HELPER.getYellowFG(), 'Or use following commands:');
-            console.log('\tnode server.js');
-            console.log('\tnode server.js', BASH_COLORS_HELPER.getYellowFG('--port=9002'));
-            console.log('\tnode server.js', BASH_COLORS_HELPER.getYellowFG('--port=9002 --ssl'));
-            console.log('\tnode server.js', BASH_COLORS_HELPER.getYellowFG('--port=9002 --ssl --sslKey=/home/ssl/ssl.key --sslCert=/home/ssl/ssl.crt'));
+            console.log('\tnode signaller.js');
+            console.log('\tnode signaller.js', BASH_COLORS_HELPER.getYellowFG('--port=9002'));
+            console.log('\tnode signaller.js', BASH_COLORS_HELPER.getYellowFG('--port=9002 --ssl'));
+            console.log('\tnode signaller.js', BASH_COLORS_HELPER.getYellowFG('--port=9002 --ssl --sslKey=/home/ssl/ssl.key --sslCert=/home/ssl/ssl.crt'));
 
             console.log('\n');
             console.log('Here is list of all config parameters:');
@@ -153,7 +153,7 @@ module.exports = exports = function(config, BASH_COLORS_HELPER) {
             console.log(BASH_COLORS_HELPER.getYellowFG(), '--dependencies');
             console.log('\tCheck all RTCMultiConnection dependencies.');
             console.log(BASH_COLORS_HELPER.getYellowFG(), '--autoRebootServerOnFailure=false');
-            console.log('\tDisable auto-restart server.js on failure.');
+            console.log('\tDisable auto-restart signaller.js on failure.');
             console.log(BASH_COLORS_HELPER.getYellowFG(), '--dirPath=/var/www/html/');
             console.log('\tDirectory path that is used for HTML/CSS/JS content delivery.');
             console.log(BASH_COLORS_HELPER.getYellowFG(), '--homePage=/demos/Video-Conferencing.html');

@@ -1,5 +1,3 @@
-// pushLogs is used to write error logs into logs.json
-const pushLogs = require('./pushLogs.js');
 const BASH_COLORS_HELPER = require('./BASH_COLORS_HELPER.js');
 
 module.exports = exports = function(httpServer, config) {
@@ -36,9 +34,9 @@ module.exports = exports = function(httpServer, config) {
             console.log('\tAdmin page password: ' + config.adminPassword);
         }
 
-        console.log('For more help: ', BASH_COLORS_HELPER.getYellowFG('node server.js --help'));
+        console.log('For more help: ', BASH_COLORS_HELPER.getYellowFG('node signaller.js --help'));
         console.log('\n');
     } catch (e) {
-        pushLogs(config, 'app.listen.callback', e);
+        console.error(config, 'app.listen.callback', e);
     }
 };
