@@ -8,9 +8,9 @@
   "enableLogs": "true",
   "autoRebootServerOnFailure": "true",
   "isUseHTTPs": "false",
-  "sslKey": "../brightchats_sslcerts_2020/brightchats.key",
-  "sslCert": "../brightchats_sslcerts_2020/1f1aacb6b8a45b2b.crt",
-  "sslCabundle": "../brightchats_sslcerts_2020/gd_bundle-g2-g1.crt",
+  "sslKey": "../wildcard_sslcerts_2020/bc3.key",
+  "sslCert": "../wildcard_sslcerts_2020/62e2008550985efe.crt",
+  "sslCabundle": "../wildcard_sslcerts_2020/sf_bundle-g2-g1.crt",
   "enableAdmin": "false",
   "adminUserName": "username",
   "adminPassword": "password"
