@@ -834,7 +834,7 @@ module.exports = exports = function (socket, config) {
                 closeOrShiftRoom();
 
                 if (listOfRooms[arg.sessionid] && listOfRooms[arg.sessionid].participants.length) {
-                    console.warn("open-room -  cannnot open room ",arg.sessionid,"as its already open with peers ",  listOfRooms[arg.sessionid].participants.length);
+                    console.warn("open-room -  cannnot open room ", arg.sessionid, "as its already open with peers ", listOfRooms[arg.sessionid].participants.length);
                     callback(false, CONST_STRINGS.ROOM_NOT_AVAILABLE);
                     return;
                 }

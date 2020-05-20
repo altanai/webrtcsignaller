@@ -197,16 +197,21 @@ httpApp = httpApp.listen(process.env.PORT || PORT, process.env.IP || "0.0.0.0", 
     rtcserver.afterHttpListen(httpApp, config);
 });
 
-ioServer(httpApp).on('connection', function (socket) {
-    rtcserver.addSocket(socket, config);
+ioServer(httpApp, {
+    transports: ['websocket'],
+    pingInterval: 25000, // default - 25000
+    pingTimeout: 60000, // default - 60000
+})
+    .on('connection', function (socket) {
+        rtcserver.addSocket(socket, config);
 
-    const params = socket.handshake.query;
+        const params = socket.handshake.query;
 
-    if (!params.socketCustomEvent) {
-        params.socketCustomEvent = 'custom-message';
-    }
+        if (!params.socketCustomEvent) {
+            params.socketCustomEvent = 'custom-message';
+        }
 
-    socket.on(params.socketCustomEvent, function (message) {
-        socket.broadcast.emit(params.socketCustomEvent, message);
+        socket.on(params.socketCustomEvent, function (message) {
+            socket.broadcast.emit(params.socketCustomEvent, message);
+        });
     });
-});
