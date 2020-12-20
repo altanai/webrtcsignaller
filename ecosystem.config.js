@@ -1,7 +1,7 @@
 module.exports = {
     apps: [{
-        name: "signaller",
-        script: 'server.js',
+        name: "webrtcsignaller",
+        script: 'webrtcsignaller.js',
         env: {
             NODE_ENV: "development",
         },
