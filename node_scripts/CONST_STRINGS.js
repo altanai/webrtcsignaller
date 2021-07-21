@@ -1,5 +1,8 @@
 var CONST_STRINGS = {
     ROOM_NOT_AVAILABLE: 'Session not available',
+    ROOM_NOT_AVAILABLE_TOOPEN_ALREADYOPEN: 'Session not available to open as it is already open',
+    ROOM_NOT_AVAILABLE_TOJOIN: 'Session not available to Join',
+    ROOM_NOT_AVAILABLE_TOCLOSE :  'Session not available to Close',
     INVALID_PASSWORD: 'Invalid password',
     USERID_NOT_AVAILABLE: 'User ID does not exist',
     ROOM_PERMISSION_DENIED: 'Session permission denied',
