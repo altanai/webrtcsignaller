@@ -1,0 +1,38 @@
+#!/bin/bash
+#sh MAKEFILE
+git pull origin br-ch
+apt-get update
+
+#reclaim ownership
+sudo chown -R $USER ~/brightchats_p2p/
+# set npm path
+#npm config set prefix "node_modules"
+
+npm install -g npm@latest
+
+npm install
+# audit Fix Auto and list modules
+npm audit fix
+npm list -g --depth 0
+npm list
+node_modules/pm2/bin/pm2 update
+
+#  Verifies the contents of the cache folder, garbage collecting any unneeded data, and verifying the integrity of the cache index and all cached data
+npm cache verify
+
+# remove logs
+rm /home/ubuntu/.npm/_logs/*
+echo "----done------"
+node_modules/pm2/bin/pm2 update
+
+if [ "$HOSTNAME" == "ip-172-31-5-226" ]; then
+    printf '%s\n' "on the hehllo host"
+    node_modules/pm2/bin/pm2 start ecosystem.config.js --env hehllo
+else
+    printf '%s\n' "on the brightchats host"
+    node_modules/pm2/bin/pm2 start ecosystem.config.js
+fi
+
+echo "----server started------"
+#netstat -anp
+node_modules/pm2/bin/pm2 monit

@@ -157,7 +157,7 @@ Mem:           992        841        151         17         64        325
 Swap:            0          0          0
 ```
 
-checking avaible CPU cores 
+checking available CPU cores 
 ```shell script
 grep -c ^processor /proc/cpuinfo
 > 1 
