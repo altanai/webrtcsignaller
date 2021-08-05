@@ -35,4 +35,4 @@ fi
 
 echo "----server started------"
 #netstat -anp
-/pm2 monit
+pm2 monit
