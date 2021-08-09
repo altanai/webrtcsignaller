@@ -118,8 +118,9 @@ function getValuesFromConfigJson(param) {
     return result;
 }
 
-var config = getValuesFromConfigJson(jsonPath);
-config = getBashParameters(config, BASH_COLORS_HELPER);
+var config;
+// var config = getValuesFromConfigJson(jsonPath);
+// config = getBashParameters(config, BASH_COLORS_HELPER);
 
 if (!PORT) {
     PORT = config.port;
@@ -198,7 +199,7 @@ httpApp = httpApp.listen(process.env.PORT || PORT, process.env.IP || "0.0.0.0", 
 });
 
 ioServer(httpApp, {
-    transports: ['websocket'],
+    // transports: ['websocket'],
     pingInterval: 25000, // default - 25000
     pingTimeout: 60000, // default - 60000
 })
