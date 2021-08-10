@@ -130,9 +130,6 @@ function serverHandler(request, response) {
     response.end();
 }
 
-var httpApp;
-
-
 
 var sslOptions = {
     key: fs.readFileSync(process.env.key),
@@ -141,8 +138,7 @@ var sslOptions = {
     requestCert: true,
     rejectUnauthorized: false
 };
-
-httpApp = httpServer.createServer(sslOptions, serverHandler);
+var httpApp = httpServer.createServer(sslOptions, serverHandler);
 rtcserver.beforeHttpListen(httpApp, config);
 httpApp = httpApp.listen(process.env.signallerPort || PORT, process.env.IP || "0.0.0.0", function () {
     rtcserver.afterHttpListen(httpApp, config);
