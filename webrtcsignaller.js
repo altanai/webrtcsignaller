@@ -4,13 +4,15 @@
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
-var httpServer = require('http');
+// var httpServer = require('http');
+var httpServer = require('https');
 const ioServer = require('socket.io');
 const rtcserver = require('./node_scripts/index.js');
 
 
-var PORT;
-var isUseHTTPs = false;
+require('dotenv').config({path: `.env.${process.env.NODE_ENV}`});
+console.log('ENV file .env.' + process.env.NODE_ENV);
+
 
 const jsonPath = {
     config: 'config.json',
@@ -32,12 +34,8 @@ function getValuesFromConfigJson(param) {
         socketMessageEvent: 'RTCMultiConnection-Message',
         socketCustomEvent: 'RTCMultiConnection-Custom-Message',
         port: process.env.PORT || 9001,
-        enableLogs: false,
+        enableLogs: true,
         autoRebootServerOnFailure: false,
-        isUseHTTPs: null,
-        sslKey: null,
-        sslCert: null,
-        sslCabundle: null,
         enableAdmin: false,
         adminUserName: null,
         adminPassword: null
@@ -53,35 +51,35 @@ function getValuesFromConfigJson(param) {
         console.log("read from external config ", param.config, config);
     }
 
-    ['sslKey', 'sslCert', 'sslCabundle'].forEach(function (key) {
-        if (!config[key] || config[key].toString().length == 0) {
-            return;
-        }
-
-        if (config[key].indexOf('/path/to/') === -1) {
-            if (key === 'sslKey') result.sslKey = config.sslKey;
-
-            if (key === 'sslCert') result.sslCert = config.sslCert;
-
-            if (key === 'sslCabundle') result.sslCabundle = config.sslCabundle;
-        }
-    });
-
-    if ((config.port || '').toString() !== '9001') {
-        result.port = (config.port || '').toString();
-    }
+    // ['sslKey', 'sslCert', 'sslCabundle'].forEach(function (key) {
+    //     if (!config[key] || config[key].toString().length == 0) {
+    //         return;
+    //     }
+    //
+    //     if (config[key].indexOf('/path/to/') === -1) {
+    //         if (key === 'sslKey') result.sslKey = config.sslKey;
+    //
+    //         if (key === 'sslCert') result.sslCert = config.sslCert;
+    //
+    //         if (key === 'sslCabundle') result.sslCabundle = config.sslCabundle;
+    //     }
+    // });
+    //
+    // if ((config.port || '').toString() !== '9001') {
+    //     result.port = (config.port || '').toString();
+    // }
 
     if ((config.autoRebootServerOnFailure || '').toString() === 'true') {
         result.autoRebootServerOnFailure = true;
     }
 
-    if ((config.isUseHTTPs || '').toString() === 'true') {
-        result.isUseHTTPs = true;
-    }
-
-    if ((config.enableLogs || '').toString() === 'true') {
-        result.enableLogs = true;
-    }
+    // if ((config.isUseHTTPs || '').toString() === 'true') {
+    //     result.isUseHTTPs = true;
+    // }
+    //
+    // if ((config.enableLogs || '').toString() === 'true') {
+    //     result.enableLogs = true;
+    // }
 
     if ((config.socketURL || '').toString().length) {
         result.socketURL = (config.socketURL || '').toString();
@@ -119,24 +117,11 @@ function getValuesFromConfigJson(param) {
 }
 
 var config;
-// var config = getValuesFromConfigJson(jsonPath);
-// config = getBashParameters(config, BASH_COLORS_HELPER);
-
-if (!PORT) {
-    PORT = config.port;
-} else {
-    PORT = 8085;
-}
-
-if (isUseHTTPs === false) {
-    isUseHTTPs = config.isUseHTTPs;
-}
-
 function serverHandler(request, response) {
     // to make sure we always get valid info from json file
     // even if external codes are overriding it
     config = getValuesFromConfigJson(jsonPath);
-    config = getBashParameters(config, BASH_COLORS_HELPER);
+    // config = getBashParameters(config, BASH_COLORS_HELPER);
 
     response.writeHead(200, {
         'Content-Type': 'text/plain'
@@ -147,54 +132,19 @@ function serverHandler(request, response) {
 
 var httpApp;
 
-if (isUseHTTPs) {
-    httpServer = require('https');
 
-    var options = {
-        key: null,
-        cert: null,
-        ca: null
-    };
 
-    var pfx = false;
+var sslOptions = {
+    key: fs.readFileSync(process.env.key),
+    cert: fs.readFileSync(process.env.cert),
+    ca: fs.readFileSync(process.env.ca),
+    requestCert: true,
+    rejectUnauthorized: false
+};
 
-    console.log(" --------------------- Final config  ", config);
-    // config.sslKey = "./ssl_certs/server.key";
-    // config.sslCert = "./ssl_certs/server.crt";
-
-    if (!fs.existsSync(config.sslKey)) {
-        console.log(BASH_COLORS_HELPER.getRedFG(), 'sslKey:\t ' + config.sslKey + ' does not exist.');
-    } else {
-        pfx = config.sslKey.indexOf('.pfx') !== -1;
-        options.key = fs.readFileSync(config.sslKey);
-    }
-
-    if (!fs.existsSync(config.sslCert)) {
-        console.log(BASH_COLORS_HELPER.getRedFG(), 'sslCert:\t ' + config.sslCert + ' does not exist.');
-    } else {
-        options.cert = fs.readFileSync(config.sslCert);
-    }
-
-    if (config.sslCabundle) {
-        if (!fs.existsSync(config.sslCabundle)) {
-            console.log(BASH_COLORS_HELPER.getRedFG(), 'sslCabundle:\t ' + config.sslCabundle + ' does not exist.');
-        }
-        options.ca = fs.readFileSync(config.sslCabundle);
-    }
-
-    if (pfx === true) {
-        options = {
-            pfx: sslKey
-        };
-    }
-
-    httpApp = httpServer.createServer(options, serverHandler);
-} else {
-    httpApp = httpServer.createServer(serverHandler);
-}
-
+httpApp = httpServer.createServer(sslOptions, serverHandler);
 rtcserver.beforeHttpListen(httpApp, config);
-httpApp = httpApp.listen(process.env.PORT || PORT, process.env.IP || "0.0.0.0", function () {
+httpApp = httpApp.listen(process.env.signallerPort || PORT, process.env.IP || "0.0.0.0", function () {
     rtcserver.afterHttpListen(httpApp, config);
 });
 
