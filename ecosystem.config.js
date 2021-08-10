@@ -12,11 +12,11 @@ module.exports = {
         exec_mode: "cluster",
         instances: 1,
         args: "--ssl --port=8085"
-    }
-        // {
-        //   script: './service-worker/',
-        //   watch: ['./service-worker']
-        // }
+    },
+        {
+            script: './service-worker/',
+            watch: ['./service-worker']
+        }
     ],
 
     deploy: {
@@ -25,7 +25,7 @@ module.exports = {
             host: 'SSH_HOSTMACHINE',
             ref: 'origin/master',
             repo: ' git@github.com:altanai/webrtcsignaller.git',
-            path: 'DESTINATION_PATH',
+            path: '/home/ubuntu/webrtcsignaller',
             'pre-deploy-local': '',
             'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production',
             'pre-setup': ''

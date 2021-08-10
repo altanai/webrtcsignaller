@@ -1,10 +1,9 @@
-// pushLogs is used to write error logs into logs.json
-const pushLogs = require('./pushLogs.js');
+// console.log is used to write error logs into logs.json
 const BASH_COLORS_HELPER = require('./BASH_COLORS_HELPER.js');
 
 module.exports = exports = function(httpServer, config) {
     httpServer.on('error', function(e) {
-        pushLogs(config, 'app.onerror', e);
+        console.log(config, 'app.onerror', e);
 
         if (e.code != 'EADDRINUSE') return;
 
@@ -20,18 +19,18 @@ module.exports = exports = function(httpServer, config) {
                         try {
                             cb_stdout(me, data);
                         } catch (e) {
-                            pushLogs(config, 'stdout.data', e);
+                            console.log(config, 'stdout.data', e);
                         }
                     });
                     child.stdout.on('end', function() {
                         try {
                             cb_end(me);
                         } catch (e) {
-                            pushLogs(config, 'stdout.end', e);
+                            console.log(config, 'stdout.end', e);
                         }
                     });
                 } catch (e) {
-                    pushLogs(config, 'cmd_exec', e);
+                    console.log(config, 'cmd_exec', e);
                 }
             }
 
@@ -43,11 +42,11 @@ module.exports = exports = function(httpServer, config) {
                     console.log('------------------------------');
                     console.log('Please execute below command:');
                     console.log('\x1b[31m%s\x1b[0m ', 'kill ' + pidToBeKilled);
-                    console.log('Then try to run "server.js" again.');
+                    console.log('Then try to run "signaller.js" again.');
                     console.log('------------------------------');
 
                 } catch (e) {
-                    pushLogs(config, 'log_console', e);
+                    console.log(config, 'log_console', e);
                 }
             }
 
@@ -67,21 +66,21 @@ module.exports = exports = function(httpServer, config) {
                     try {
                         me.stdout += data.toString();
                     } catch (e) {
-                        pushLogs(config, 'lsof', e);
+                        console.log(config, 'lsof', e);
                     }
                 },
                 function(me) {
                     try {
                         me.exit = 1;
                     } catch (e) {
-                        pushLogs(config, 'lsof.exit', e);
+                        console.log(config, 'lsof.exit', e);
                     }
                 }
             );
 
             setTimeout(log_console, 250);
         } catch (e) {
-            pushLogs(config, 'app.onerror.EADDRINUSE', e);
+            console.log(config, 'app.onerror.EADDRINUSE', e);
         }
     });
 };

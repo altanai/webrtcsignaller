@@ -142,7 +142,7 @@ module.exports = exports = function(config, socket, maxRelayLimitPerUser) {
         } catch (e) {}
     }
 
-    // this even is called from "signaling-server.js"
+    // this even is called from "signaling-signaller.js"
     socket.ondisconnect = function() {
         try {
             if (!socket.isScalableBroadcastSocket) return;
