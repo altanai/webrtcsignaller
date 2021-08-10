@@ -1,12 +1,7 @@
 #!/bin/bash
 #sh MAKEFILE
-git pull origin br-ch
+git pull
 apt-get update
-
-#reclaim ownership
-sudo chown -R $USER ~/brightchats_p2p/
-# set npm path
-#npm config set prefix "node_modules"
 
 npm install -g npm@latest
 
@@ -23,15 +18,25 @@ npm cache verify
 # remove logs
 rm /home/ubuntu/.npm/_logs/*
 echo "----done------"
-pm2 update
 
-if [ "$HOSTNAME" == "ip-172-31-5-226" ]; then
-    printf '%s\n' "on the hehllo host"
-    pm2 start ecosystem.config.js --env hehllo
+pm2 stop webrtcsignaller
+pm2 delete webrtcsignaller
+if [[ "$HOSTNAME" == "ip-172-31-9-100" ]]
+then
+    printf '%s\n' "on prod"
+    export NODE_ENV="prod"
+    pm2 start ecosystem.config.js --env prod
+elif [[ "$HOSTNAME" == "ip-172-31-21-121" ]]
+then
+    printf '%s\n' "on dev "
+    export NODE_ENV="dev"
+    pm2 start ecosystem.config.js --env dev
 else
-    printf '%s\n' "on the brightchats host"
-    pm2 start ecosystem.config.js
+    printf '%s\n' "on other test host"
+    export NODE_ENV="test"
+    pm2 start ecosystem.config.js --env test
 fi
+
 
 echo "----server started------"
 #netstat -anp
