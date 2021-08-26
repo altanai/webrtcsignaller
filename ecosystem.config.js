@@ -1,12 +1,15 @@
 module.exports = {
     apps: [{
-        name: "signaller",
-        script: 'signaller.js',
+        name: "webrtcsignaller",
+        script: 'webrtcsignaller.js',
         env: {
-            NODE_ENV: "development",
+            NODE_ENV: "prod",
         },
-        env_production: {
-            NODE_ENV: "production",
+        env_prod: {
+            NODE_ENV: "prod",
+        },
+        env_dev: {
+            "NODE_ENV": "dev"
         },
         watch: true,
         exec_mode: "cluster",

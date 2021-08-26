@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JavaScript-modules-diagram</ID>
+  <OriginalElement>/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js</OriginalElement>
+  <nodes>
+    <node x="360.0" y="424.0">/home/altanai/Documents/webrtcdev/webrtcsignaller/node_modules/socket.io/lib/index.js</node>
+    <node x="112.0" y="0.0">/home/altanai/Documents/webrtcdev/webrtcsignaller/node_scripts/index.js</node>
+    <node x="107.0" y="177.0">/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#config#302;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#fs#57;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#httpServer#176;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#ioServer#213;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#path#83;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#rtcserver#252;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#url#113;</node>
+    <node x="63.0" y="444.0">config;</node>
+    <node x="263.0" y="464.0">fs</node>
+    <node x="0.0" y="169.0">https</node>
+    <node x="405.0" y="101.0">path</node>
+    <node x="17.0" y="294.0">url</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#config#302;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#fs#57;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#httpServer#176;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#ioServer#213;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#path#83;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#rtcserver#252;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#url#113;" target="https" relationship="">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#config#302;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#fs#57;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#httpServer#176;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#ioServer#213;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#path#83;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#rtcserver#252;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#url#113;" target="/home/altanai/Documents/webrtcdev/webrtcsignaller/node_modules/socket.io/lib/index.js" relationship="">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#config#302;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#fs#57;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#httpServer#176;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#ioServer#213;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#path#83;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#rtcserver#252;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#url#113;" target="config;" relationship="">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#config#302;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#fs#57;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#httpServer#176;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#ioServer#213;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#path#83;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#rtcserver#252;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#url#113;" target="url" relationship="">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#config#302;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#fs#57;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#httpServer#176;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#ioServer#213;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#path#83;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#rtcserver#252;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#url#113;" target="fs" relationship="">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#config#302;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#fs#57;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#httpServer#176;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#ioServer#213;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#path#83;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#rtcserver#252;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#url#113;" target="path" relationship="">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#config#302;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#fs#57;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#httpServer#176;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#ioServer#213;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#path#83;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#rtcserver#252;/home/altanai/Documents/webrtcdev/webrtcsignaller/webrtcsignaller.js#url#113;" target="/home/altanai/Documents/webrtcdev/webrtcsignaller/node_scripts/index.js" relationship="">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="284.5" y="253.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>All</Category>
+  </Categories>
+  <VISIBILITY>Details</VISIBILITY>
+</Diagram>
+
