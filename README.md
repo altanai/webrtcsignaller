@@ -234,3 +234,41 @@ change the ownership permission for the key and the ssh using it
 chmod 600 key.pem
 ssh -v -i key.pem ubuntu@ec2-address
 ```
+
+
+**Issue2** Unable to access repo 
+
+    Cloning into 'xxx'...
+    ERROR: Repository not found.
+    fatal: Could not read from remote repository.
+    
+    Please make sure you have the correct access rights
+    and the repository exists.
+
+**solution** Check the username 
+
+    ssh -T git@github.com
+
+If it is not the same user that has been granted access from github project settings then change user using 
+
+    git config --global user.email "<useremail>"
+    git config --global user.name "<name>"
+    git config --global user.password "<user's password>"
+
+Retry  
+
+    ssh -vT git@github.com
+
+**Issue3** Generated rsa key unable to pull from github due to permission 
+
+    Permission denied (publickey).
+
+**Solution** While there exists documentation to fix this in many ways on community sites , my approach is
+- remove exising id_rsa keys from both ~/.ssh folder and from github 
+- generate fresh key under default id_rsa name
+- add the keys to github/repository -> settings -> deploy keys 
+- ensure you use git: and not https:// in the remote origin name 
+
+This ensures that further automated pull using bash scripts work in future as https requires setting personal access token for each pull.
+
+

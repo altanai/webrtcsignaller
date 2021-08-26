@@ -785,8 +785,10 @@ module.exports = exports = function (socket, config) {
                 }
 
                 if (listOfRooms[roomid].password === password) {
+                    console.warn("is-valid-password  ");
                     callback(true, roomid, false);
                 } else {
+                    console.warn("is-valid-password - false  ");
                     callback(false, roomid, CONST_STRINGS.INVALID_PASSWORD);
                 }
             } catch (e) {
