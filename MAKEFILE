@@ -25,16 +25,16 @@ if [[ "$HOSTNAME" == "xx" ]]
 then
     printf '%s\n' "on prod"
     export NODE_ENV="prod"
-    pm2 start ecosystem.config.js --env prod
+    pm2 start ecosystem.config.js --env prod --timestamp
 elif [[ "$HOSTNAME" == "xx" ]]
 then
     printf '%s\n' "on dev "
     export NODE_ENV="dev"
-    pm2 start ecosystem.config.js --env dev
+    pm2 start ecosystem.config.js --env dev --timestamp
 else
     printf '%s\n' "on other test host"
     export NODE_ENV="test"
-    pm2 start ecosystem.config.js --env test
+    pm2 start ecosystem.config.js --env test --timestamp
 fi
 
 
